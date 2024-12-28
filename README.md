@@ -1,6 +1,6 @@
 # Basic CI/CD
 
-Development of a simple **CI/CD** for the *SimpleBashUtils* project. Building, testing, deployment.
+Development of a simple **CI/CD** for the C project. Building, testing, deployment.
 
 The russian version of the task can be found in the repository.
 
@@ -130,11 +130,20 @@ Now I have readjusted the tests, making them more difficult and less flattering.
 
 **== Task ==**
 
-#### Write a stage for **CI** to build applications from the *C2_SimpleBashUtils* project.
+Write a stage for **CI** to build applications from the *C2_SimpleBashUtils* project.
 
-##### In the _gitlab-ci.yml_ file, add a stage to start the building via makefile from the _C2_ project.
+n the _gitlab-ci.yml_ file, add a stage to start the building via makefile from the _C2_ project.
 
-##### Save post-build files (artifacts) to a random directory with a 30-day retention period.
+Save post-build files (artifacts) to a random directory with a 30-day retention period.
+
+**== If you don't have access to *C2_SimpleBashUtils*  ==**
+
+
+Write a stage for **CI** to build *DO* application from the code-samples folder.
+
+In the _gitlab-ci.yml_ file, add a stage to start the building via makefile from the code-samples folder.
+
+Save post-build files (artifacts) to a random directory with a 30-day retention period.
 
 
 ### Part 3. Codestyle test
@@ -155,7 +164,9 @@ Now I have readjusted the tests, making them more difficult and less flattering.
 
 **== Task ==**
 
-#### Write a stage for **CI** that runs your integration tests from the same project.
+#### Write a stage for **CI** that runs integration tests.
+
+##### To do this, write tests for the project from the code-samples folder yourself. The tests can be written in any language (c, bash, python, etc.) and should call the built application to check its validity on different cases.
 
 ##### Run this stage automatically only if the build and codestyle test passes successfully.
 
@@ -185,7 +196,7 @@ Now I have readjusted the tests, making them more difficult and less flattering.
 
 ##### In case of an error, fail the pipeline.
 
-As a result, you should have applications from the *C2_SimpleBashUtils* (s21_cat and s21_grep) project ready to run on the second virtual machine.
+As a result, you should have application from the code-samples folder (*DO*) ready to run on the second virtual machine.
 
 ##### Save dumps of virtual machine images.
 **P.S. Do not upload dumps to git under any circumstances!**
@@ -197,10 +208,9 @@ As a result, you should have applications from the *C2_SimpleBashUtils* (s21_cat
 
 **== Task ==**
 
-##### Set up notifications of successful/unsuccessful pipeline execution via bot named "[your nickname] DO6 CI/CD" in *Telegram*.
+#### Set up notifications of successful/unsuccessful pipeline execution via bot named "[your nickname] DO6 CI/CD" in *Telegram*.
 - The text of the notification must contain information on the successful passing of both **CI** and **CD** stages.
 - The rest of the notification text may be arbitrary.
-
 
 ## Chapter IV
 
