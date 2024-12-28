@@ -136,7 +136,7 @@ n the _gitlab-ci.yml_ file, add a stage to start the building via makefile from 
 
 Save post-build files (artifacts) to a random directory with a 30-day retention period.
 
-**== If you don't have access to *C2_SimpleBashUtils*  ==**
+**== If the project *C2_SimpleBashUtils* is not fulfilled  ==**
 
 
 Write a stage for **CI** to build *DO* application from the code-samples folder.
@@ -166,7 +166,9 @@ Save post-build files (artifacts) to a random directory with a 30-day retention 
 
 #### Write a stage for **CI** that runs integration tests.
 
-##### To do this, write tests for the project from the code-samples folder yourself. The tests can be written in any language (c, bash, python, etc.) and should call the built application to check its validity on different cases.
+##### For the *C2_SimpleBashUtils* project, you can take your already written integration tests.
+
+##### For the project from the code-samples folder, write integration tests yourself. The tests can be written in any language (c, bash, python, etc.) and should call the built application to check its validity on different cases.
 
 ##### Run this stage automatically only if the build and codestyle test passes successfully.
 
@@ -196,7 +198,7 @@ Save post-build files (artifacts) to a random directory with a 30-day retention 
 
 ##### In case of an error, fail the pipeline.
 
-As a result, you should have application from the code-samples folder (*DO*) ready to run on the second virtual machine.
+As a result, you should get a ready-to-use application from the *C2_SimpleBashUtils* project (*cat* and *grep*) or an application from the code-samples folder (*DO*) on the second virtual machine (depending on what you did).
 
 ##### Save dumps of virtual machine images.
 **P.S. Do not upload dumps to git under any circumstances!**
