@@ -126,17 +126,17 @@ Ishingiz natijasi sifatida siz quyida tavsiflangan ikkita virtual mashina obrazi
 
 **== Topshiriq ==**
 
-*C2_SimpleBashUtils* loyihasidan ilovalar yig’ish bo’yicha **CI** uchun bosqich yozing.
+*SimpleBashUtils* loyihasidan ilovalar yig’ish bo’yicha **CI** uchun bosqich yozing.
 
-_gitlab-ci.yml_ faylida _C2_ loyihasidan meyk fayli orqali yig’ishni ishga tushirish bosqichini qo'shing.
+_.gitlab-ci.yml_ faylida _SimpleBashUtils_ loyihasidan meyk fayli orqali yig’ishni ishga tushirish bosqichini qo'shing.
 
 Yig'ishdan so'ng olingan fayllarni (artefaktlarni) 30 kun saqlash muddati bilan ixtiyoriy direktoriyaga saqlang.
 
-**Agar C2_SimpleBashUtils dasturi bajarilmagan bo'lsa**
+**Agar SimpleBashUtils dasturi bajarilmagan bo'lsa**
 
 *DO* papkasidan dasturni tuzish uchun **CI** uchun bosqich yoz.
 
-_gitlab-ci.yml_ faylida code-samples papkasidan meyk fayli orqali tuzishni boshlash bosqichini qo'sh.
+_.gitlab-ci.yml_ faylida code-samples papkasidan meyk fayli orqali tuzishni boshlash bosqichini qo'sh.
 
 Tuzishdan keyin olingan fayllar (artefaktlar) 30 kundan keyin o'chiriladigan istalgan katmandagi saqlanadigan.
 
@@ -160,7 +160,7 @@ Tuzishdan keyin olingan fayllar (artefaktlar) 30 kundan keyin o'chiriladigan ist
 
 #### Xuddi shu **CI** bosqichini yozing, ki, u integratsiya testlarini ishga tushursin.
 
-##### *C2_SimpleBashUtils* loyihasi uchun o'zing yozgan integratsiya testlarini olishing mumkin.
+##### *SimpleBashUtils* loyihasi uchun o'zing yozgan integratsiya testlarini olishing mumkin.
 
 ##### code-samples papkasidagi loyiha uchun o'z vaqtida integratsiya testlarini yozing. Testlar har qanday tilda (c, bash, python va boshqalar.) yozilishi va tuzilgan dasturni turli holatlarda uning ishlashini tekshirish uchun chaqirishi mumkin.
 
@@ -187,11 +187,11 @@ Tuzishdan keyin olingan fayllar (artefaktlar) 30 kundan keyin o'chiriladigan ist
 
 - O'tkazish qanday sodir bo'lishini script bo’yicha tushuntirishga tayyor bo'ling.
 
-##### _gitlab-ci.yml_ faylida yozma skriptni ishga tushirish bosqichini qo'shing.**
+##### _.gitlab-ci.yml_ faylida yozma skriptni ishga tushirish bosqichini qo'shing.**
 
 ##### Xato holatida, payplaynni "feyl" qiling.*
 
-Natijada, ikkinchi virtual mashinada *C2_SimpleBashUtils* loyihasidan (*cat* va *grep*) yoki code-samples papkasidan (*DO*) foydalanishga tayyor ilova olishingiz kerak (bu, siz nima qildingizga bog'liq).
+Natijada, ikkinchi virtual mashinada *SimpleBashUtils* loyihasidan (*cat* va *grep*) yoki code-samples papkasidan (*DO*) foydalanishga tayyor ilova olishingiz kerak (bu, siz nima qildingizga bog'liq).
 
 ##### Virtual mashinalarning obrazlari dampini saqlang.
 **P.S. Git-ga hech qachon damplarni saqlamang!**

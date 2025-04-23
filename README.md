@@ -127,18 +127,18 @@ Now I have readjusted the tests, making them more difficult and less flattering.
 
 **== Task ==**
 
-Write a stage for **CI** to build applications from the *C2_SimpleBashUtils* project.
+Write a stage for **CI** to build applications from the *SimpleBashUtils* project.
 
-n the _gitlab-ci.yml_ file, add a stage to start the building via makefile from the _C2_ project.
+n the _.gitlab-ci.yml_ file, add a stage to start the building via makefile from the _SimpleBashUtils_ project.
 
 Save post-build files (artifacts) to a random directory with a 30-day retention period.
 
-**== If the project *C2_SimpleBashUtils* is not fulfilled  ==**
+**== If the project *SimpleBashUtils* is not fulfilled  ==**
 
 
 Write a stage for **CI** to build *DO* application from the code-samples folder.
 
-In the _gitlab-ci.yml_ file, add a stage to start the building via makefile from the code-samples folder.
+In the _.gitlab-ci.yml_ file, add a stage to start the building via makefile from the code-samples folder.
 
 Save post-build files (artifacts) to a random directory with a 30-day retention period.
 
@@ -163,7 +163,7 @@ Save post-build files (artifacts) to a random directory with a 30-day retention 
 
 #### Write a stage for **CI** that runs integration tests.
 
-##### For the *C2_SimpleBashUtils* project, you can take your already written integration tests.
+##### For the *SimpleBashUtils* project, you can take your already written integration tests.
 
 ##### For the project from the code-samples folder, write integration tests yourself. The tests can be written in any language (c, bash, python, etc.) and should call the built application to check its validity on different cases.
 
@@ -191,11 +191,11 @@ Save post-build files (artifacts) to a random directory with a 30-day retention 
 
 - Be prepared to explain from the script how the relocation occurs.
 
-##### In the _gitlab-ci.yml_ file, add a stage to run the script you have written.
+##### In the _.gitlab-ci.yml_ file, add a stage to run the script you have written.
 
 ##### In case of an error, fail the pipeline.
 
-As a result, you should get a ready-to-use application from the *C2_SimpleBashUtils* project (*cat* and *grep*) or an application from the code-samples folder (*DO*) on the second virtual machine (depending on what you did).
+As a result, you should get a ready-to-use application from the *SimpleBashUtils* project (*cat* and *grep*) or an application from the code-samples folder (*DO*) on the second virtual machine (depending on what you did).
 
 ##### Save dumps of virtual machine images.
 **P.S. Do not upload dumps to git under any circumstances!**
