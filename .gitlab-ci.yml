@@ -29,7 +29,7 @@ check-style-job:
   script:
     - echo "🎨 Checking code style..."
     - clang-format --version
-    - clang-format --style=Google -n $PROJECT_DIR/main.c --Werror || true
+    - clang-format --style=Google -n $PROJECT_DIR/main.c --Werror
 
 test-job:
   stage: test
