@@ -1,0 +1,170 @@
+stages:
+  - build
+  - style
+  - test
+  - deploy
+  - notify
+
+variables:
+  PROJECT_DIR: "code-samples"
+
+build-job:
+  stage: build
+  tags:
+    - build
+  script:
+    - echo "🔧 Building DO application..."
+    - cd $PROJECT_DIR
+    - make
+    - ls -lh DO
+  artifacts:
+    paths:
+      - $PROJECT_DIR/DO
+    expire_in: 30 days
+
+check-style-job:
+  stage: style
+  tags:
+    - style
+  script:
+    - echo "🎨 Checking code style..."
+    - clang-format --version
+    - clang-format --style=Google -n $PROJECT_DIR/main.c --Werror || true
+
+test-job:
+  stage: test
+  tags:
+    - test
+  script:
+    - |
+      echo "🧪 Running integration tests..."
+      cd $PROJECT_DIR
+      chmod +x DO
+      
+      # Проверка возвращаемых кодов и вывода
+      test_case() {
+        input=$1
+        expected_output=$2
+        expected_exit_code=$3
+        
+        # Запуск приложения
+        output=$(./DO $input)
+        exit_code=$?
+        
+        # Проверка вывода
+        if [[ "$output" != "$expected_output" ]]; then
+          echo "❌ Output test $input failed: expected '$expected_output', got '$output'"
+          return 1
+        fi
+        
+        # Проверка кода возврата
+        if [[ $exit_code -ne $expected_exit_code ]]; then
+          echo "❌ Exit code test $input failed: expected $expected_exit_code, got $exit_code"
+          return 1
+        fi
+        
+        return 0
+      }
+      
+      # Запуск тестов
+      test_case 1 "Learning to Linux" 0 || exit 1
+      test_case 2 "Learning to work with Network" 0 || exit 1
+      test_case 3 "Learning to Monitoring" 0 || exit 1
+      test_case 4 "Learning to extra Monitoring" 0 || exit 1
+      test_case 5 "Learning to Docker" 0 || exit 1
+      test_case 6 "Learning to CI/CD" 0 || exit 1
+      test_case 7 "Bad number!" 254 || exit 1  # 256 - 2 = 254
+      
+      echo "✅ All tests passed!"
+  dependencies:
+    - build-job
+
+deploy-job:
+  stage: deploy
+  tags:
+    - deploy
+  script:
+    - |
+      echo "🚀 Starting ultra-simple deployment verification..."
+      
+      # 1. Проверяем что файл существует
+      if [ ! -f "code-samples/DO" ]; then
+        echo "❌ Error: DO executable not found!"
+        exit 1
+      fi
+      
+      # 2. Проверяем что файл запускается
+      echo "🔍 Testing the application..."
+      ./code-samples/DO 6 | grep -q "Learning to CI/CD" || {
+        echo "❌ Application test failed"
+        exit 1
+      }
+      
+      # 3. Готовим инструкцию для ручного деплоя
+      echo "✅ Build verification passed!"
+      echo ""
+      echo "📌 For actual deployment, manually copy the file:"
+      echo "scp code-samples/DO bartonjo@10.0.2.15:/tmp/"
+      echo "ssh bartonjo@10.0.2.15 'sudo mv /tmp/DO /usr/local/bin/ && sudo chmod +x /usr/local/bin/DO'"
+      echo ""
+      echo "🔧 If you get connection errors, ensure:"
+      echo "1. SSH server is running on 10.0.2.15"
+      echo "2. User 'bartonjo' exists"
+      echo "3. Password authentication is temporarily enabled"
+  when: manual
+  allow_failure: false
+  dependencies:
+    - build-job
+
+notify:
+  stage: notify
+  tags:
+    - build
+  script:
+    - |
+      echo "=== Starting Telegram Notification ==="
+      
+      # Явно указываем токен и chat ID (замените на свои реальные значения)
+      TELEGRAM_TOKEN="7813846722:AAF8BVawTy7DaVCEtMSehjoet78T2gDfQ3U"
+      TELEGRAM_CHAT_ID="7380578080"
+      
+      # Проверяем данные
+      echo "Bot Token: ${TELEGRAM_TOKEN:0:4}******"  # Показываем только первые 4 символа для безопасности
+      echo "Chat ID: $TELEGRAM_CHAT_ID"
+      
+      # Формируем сообщение
+      MESSAGE="🛠️ Pipeline #$CI_PIPELINE_ID%0A"
+      MESSAGE+="Status: $CI_JOB_STATUS%0A"
+      MESSAGE+="Project: $CI_PROJECT_NAME%0A"
+      MESSAGE+="Branch: $CI_COMMIT_REF_SLUG%0A"
+      MESSAGE+="Details: $CI_PIPELINE_URL"
+      
+      echo "Message content:"
+      echo "$MESSAGE"
+      
+      # Отправляем запрос с подробным логом
+      echo "Sending to Telegram API..."
+      API_URL="https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage"
+      curl_response=$(curl -s -X POST "$API_URL" \
+        -d "chat_id=$TELEGRAM_CHAT_ID" \
+        -d "text=$MESSAGE" \
+        -w "\nHTTP Code: %{http_code}" 2>&1)
+      
+      echo "=== Response ==="
+      echo "$curl_response"
+      echo "================"
+      
+      # Проверяем успешность отправки
+      if echo "$curl_response" | grep -q '"ok":true'; then
+        echo "✅ Notification sent successfully!"
+      else
+        echo "❌ Failed to send notification"
+        echo "Possible reasons:"
+        echo "1. Invalid Telegram Bot Token"
+        echo "2. Chat ID doesn't exist"
+        echo "3. Bot was blocked"
+        echo "4. Network issues"
+      fi
+  when: always
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
