@@ -28,9 +28,12 @@ int main(int argc, char *argv[]) {
 			printf("Learning to CI/CD\n");
 			break;
 		default:
-			printf("Bad number!\n");
+			printf ("Bad number!\n");
 			return -2;
 	}
 
     return 0;
 }
+
+
+
